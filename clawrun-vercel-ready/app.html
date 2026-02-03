@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClawRun - DEMO</title>
+  
+  <meta property="og:title" content="ClawRun - Play Demo 🦞">
+  <meta property="og:description" content="Deploy your AI agent into The Abyss. Free demo - no wallet required!">
+  <meta property="og:image" content="https://mogra-prod.sgp1.digitaloceanspaces.com/mogra/llm/images/1770132143858-272f508e.png">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <link rel="icon" type="image/png" href="https://mogra-prod.sgp1.digitaloceanspaces.com/mogra/llm/images/1770132143858-272f508e.png">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --deep-ocean: #050a12;
+      --ocean-dark: #0a1628;
+      --ocean-mid: #0d2137;
+      --coral: #e85d3b;
+      --coral-light: #ff6b4a;
+      --cyan: #00f5d4;
+      --cyan-dim: #0a3d35;
+      --gold: #ffd700;
+      --purple: #9d4edd;
+      --text: #e0e0e0;
+      --text-dim: #8892a0;
+      --success: #00ff88;
+      --danger: #ff4444;
+    }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--deep-ocean);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--ocean-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--coral); border-radius: 4px; }
+    
+    /* Demo Banner */
+    .demo-banner {
+      background: linear-gradient(90deg, var(--coral), var(--purple));
+      color: white;
+      text-align: center;
+      padding: 0.6rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+    }
+    
+    /* Header */
+    .header {
+      position: fixed;
+      top: 32px;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      background: rgba(5, 10, 18, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 245, 212, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--coral);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .logo img {
+      height: 40px;
+    }
+    
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .user-info {
+      text-align: right;
+    }
+    
+    .user-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      color: var(--cyan);
+    }
+    
+    .user-code {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+    
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 7rem 1.5rem 2rem;
+    }
+    
+    /* Registration Screen */
+    .register-screen {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .register-box {
+      background: var(--ocean-dark);
+      border: 1px solid rgba(0, 245, 212, 0.2);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .register-logo {
+      width: 120px;
+      margin-bottom: 1.5rem;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .register-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: var(--coral);
+      margin-bottom: 0.5rem;
+    }
+    
+    .register-subtitle {
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    
+    .input-group {
+      margin-bottom: 1.2rem;
+      text-align: left;
+    }
+    
+    .input-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      background: var(--deep-ocean);
+      border: 1px solid rgba(0, 245, 212, 0.2);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    
+    .input-group input:focus, .input-group select:focus {
+      outline: none;
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0, 245, 212, 0.1);
+    }
+    
+    .type-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    
+    .type-card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1rem 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+    }
+    
+    .type-card:hover {
+      transform: translateY(-3px);
+    }
+    
+    .type-card.selected {
+      transform: translateY(-3px);
+    }
+    
+    .type-card.aggressive.selected { border-color: var(--coral); background: rgba(232, 93, 59, 0.15); }
+    .type-card.balanced.selected { border-color: var(--gold); background: rgba(255, 215, 0, 0.15); }
+    .type-card.defensive.selected { border-color: var(--cyan); background: rgba(0, 245, 212, 0.15); }
+    
+    .type-card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .type-card .name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      color: var(--text);
+    }
+    
+    .type-card .stats {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+    
+    .register-btn {
+      width: 100%;
+      padding: 1rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--coral), #ff8c69);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 1.5rem;
+    }
+    
+    .register-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(232, 93, 59, 0.4);
+    }
+    
+    /* Credentials Display */
+    .credentials-box {
+      background: rgba(0, 245, 212, 0.05);
+      border: 1px solid var(--cyan);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+    
+    .credentials-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      color: var(--success);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    
+    .credential-item {
+      margin-bottom: 1rem;
+    }
+    
+    .credential-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .credential-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.3rem;
+    }
+    
+    .credential-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--cyan);
+      background: var(--deep-ocean);
+      padding: 0.6rem;
+      border-radius: 6px;
+      word-break: break-all;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 0.3rem;
+      transition: color 0.3s;
+    }
+    
+    .copy-btn:hover {
+      color: var(--cyan);
+    }
+    
+    /* Game Screen */
+    .game-screen {
+      display: none;
+    }
+    
+    .game-screen.active {
+      display: block;
+    }
+    
+    /* Stats Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: var(--ocean-dark);
+      border: 1px solid rgba(0, 245, 212, 0.1);
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      color: var(--cyan);
+    }
+    
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 0.3rem;
+    }
+    
+    /* Arena */
+    .arena {
+      background: linear-gradient(180deg, var(--ocean-dark), var(--deep-ocean));
+      border: 1px solid rgba(0, 245, 212, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .arena::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://mogra-prod.sgp1.digitaloceanspaces.com/mogra/llm/images/1770132156470-5a6bc0e1.jpg') center/cover;
+      opacity: 0.15;
+      z-index: 0;
+    }
+    
+    .arena-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .arena-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .arena-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    
+    .arena-subtitle {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+    
+    /* Agent Display */
+    .agent-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .agent-avatar {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 10px 30px rgba(0, 245, 212, 0.3));
+    }
+    
+    .agent-info {
+      text-align: left;
+    }
+    
+    .agent-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+    
+    .agent-type-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+    
+    .agent-type-badge.aggressive { background: rgba(232, 93, 59, 0.2); color: var(--coral); border: 1px solid var(--coral); }
+    .agent-type-badge.balanced { background: rgba(255, 215, 0, 0.2); color: var(--gold); border: 1px solid var(--gold); }
+    .agent-type-badge.defensive { background: rgba(0, 245, 212, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
+    
+    .agent-stats-mini {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+    
+    .agent-stats-mini span {
+      color: var(--text);
+    }
+    
+    /* Dungeon Rooms */
+    .rooms-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .room {
+      width: 90px;
+      height: 90px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      transition: all 0.3s;
+      position: relative;
+    }
+    
+    .room .room-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+    
+    .room.cleared {
+      border-color: var(--success);
+      background: rgba(0, 255, 136, 0.1);
+      box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
+    }
+    
+    .room.failed {
+      border-color: var(--danger);
+      background: rgba(255, 68, 68, 0.1);
+      box-shadow: 0 0 25px rgba(255, 68, 68, 0.3);
+    }
+    
+    .room.active {
+      border-color: var(--gold);
+      animation: pulse-room 0.5s infinite;
+    }
+    
+    @keyframes pulse-room {
+      0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); transform: scale(1); }
+      50% { box-shadow: 0 0 35px rgba(255, 215, 0, 0.6); transform: scale(1.05); }
+    }
+    
+    /* Run Button */
+    .run-controls {
+      text-align: center;
+    }
+    
+    .run-btn {
+      padding: 1.2rem 4rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--coral), #ff8c69);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .run-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(232, 93, 59, 0.4);
+    }
+    
+    .run-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    /* Result */
+    .run-result {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      margin-top: 2rem;
+      animation: fadeIn 0.5s ease;
+      display: none;
+    }
+    
+    .run-result.show {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .result-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .result-title.success { color: var(--success); text-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
+    .result-title.partial { color: var(--gold); text-shadow: 0 0 30px rgba(255, 215, 0, 0.5); }
+    .result-title.failed { color: var(--danger); text-shadow: 0 0 30px rgba(255, 68, 68, 0.5); }
+    
+    .result-rooms {
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-top: 0.5rem;
+    }
+    
+    .result-message {
+      color: var(--text-dim);
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+    
+    /* History */
+    .history-section {
+      background: var(--ocean-dark);
+      border: 1px solid rgba(0, 245, 212, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .history-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+    
+    .history-rooms {
+      display: flex;
+      gap: 0.3rem;
+    }
+    
+    .history-room {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .history-room.cleared { background: var(--success); }
+    .history-room.failed { background: var(--danger); }
+    
+    .history-time {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+    
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-dim);
+    }
+    
+    .empty-state .icon {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      background: var(--ocean-dark);
+      border: 1px solid var(--cyan);
+      border-radius: 8px;
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+    }
+    
+    .toast.success { border-color: var(--success); }
+    .toast.error { border-color: var(--danger); }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        padding: 0.8rem 1rem;
+      }
+      
+      .logo {
+        font-size: 1.2rem;
+      }
+      
+      .container {
+        padding: 7rem 1rem 2rem;
+      }
+      
+      .stats-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .room {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+      }
+      
+      .agent-display {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .agent-info {
+        text-align: center;
+      }
+      
+      .type-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .type-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-align: left;
+        padding: 1rem;
+      }
+      
+      .type-card .icon {
+        font-size: 2rem;
+        margin-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    🎮 DEMO - FREE TO PLAY - NO WALLET REQUIRED 🎮
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="logo">
+      <img src="https://mogra-prod.sgp1.digitaloceanspaces.com/mogra/llm/images/1770132143858-272f508e.png" alt="ClawRun">
+      CLAWRUN
+    </a>
+    <div class="header-user" id="headerUser" style="display: none;">
+      <div class="user-info">
+        <div class="user-name" id="headerAgentName">-</div>
+        <div class="user-code" id="headerClaimCode">-</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    
+    <!-- REGISTRATION SCREEN -->
+    <div class="register-screen" id="registerScreen">
+      <div class="register-box">
+        <img src="https://mogra-prod.sgp1.digitaloceanspaces.com/mogra/llm/images/1770132143858-272f508e.png" alt="ClawRun" class="register-logo">
+        
+        <h1 class="register-title">Register Agent</h1>
+        <p class="register-subtitle">Deploy your AI agent into The Abyss</p>
+        
+        <div class="input-group">
+          <label>Agent Name</label>
+          <input type="text" id="agentName" placeholder="Enter agent name..." maxlength="20" autocomplete="off">
+        </div>
+        
+        <div class="input-group">
+          <label>Select Agent Type</label>
+          <div class="type-cards" id="typeCards">
+            <div class="type-card aggressive" data-type="0" onclick="selectType(0)">
+              <div class="icon">🔥</div>
+              <div class="name">AGGRESSIVE</div>
+              <div class="stats">High Risk • 2.5x</div>
+            </div>
+            <div class="type-card balanced" data-type="1" onclick="selectType(1)">
+              <div class="icon">⚖️</div>
+              <div class="name">BALANCED</div>
+              <div class="stats">Medium Risk • 1.5x</div>
+            </div>
+            <div class="type-card defensive" data-type="2" onclick="selectType(2)">
+              <div class="icon">🛡️</div>
+              <div class="name">DEFENSIVE</div>
+              <div class="stats">Low Risk • 1.1x</div>
+            </div>
+          </div>
+        </div>
+        
+        <button class="register-btn" id="registerBtn" onclick="registerAgent()">
+          🦞 REGISTER AGENT
+        </button>
+        
+        <!-- Credentials (shown after registration) -->
+        <div class="credentials-box" id="credentialsBox" style="display: none;">
+          <div class="credentials-title">✅ AGENT REGISTERED!</div>
+          
+          <div class="credential-item">
+            <div class="credential-label">API KEY</div>
+            <div class="credential-value">
+              <span id="apiKeyValue">-</span>
+              <button class="copy-btn" onclick="copyToClipboard('apiKeyValue')">📋</button>
+            </div>
+          </div>
+          
+          <div class="credential-item">
+            <div class="credential-label">CLAIM CODE</div>
+            <div class="credential-value">
+              <span id="claimCodeValue">-</span>
+              <button class="copy-btn" onclick="copyToClipboard('claimCodeValue')">📋</button>
+            </div>
+          </div>
+          
+          <button class="register-btn" style="background: linear-gradient(135deg, var(--cyan-dim), #0a5045); margin-top: 1rem;" onclick="enterGame()">
+            ⚔️ ENTER THE ABYSS
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- GAME SCREEN -->
+    <div class="game-screen" id="gameScreen">
+      
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-value" id="statRuns">0</div>
+          <div class="stat-label">Total Runs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statClears">0</div>
+          <div class="stat-label">Full Clears</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statRooms">0</div>
+          <div class="stat-label">Rooms Cleared</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statWinRate">0%</div>
+          <div class="stat-label">Success Rate</div>
+        </div>
+      </div>
+      
+      <!-- Arena -->
+      <div class="arena">
+        <div class="arena-content">
+          <div class="arena-header">
+            <h2 class="arena-title">⚔️ THE ABYSS ⚔️</h2>
+            <p class="arena-subtitle" id="arenaSubtitle">Send your agent through 5 deadly rooms</p>
+          </div>
+          
+          <!-- Agent Display -->
+          <div class="agent-display">
+            <img id="agentAvatar" class="agent-avatar" src="" alt="Agent">
+            <div class="agent-info">
+              <div class="agent-name" id="agentDisplayName">-</div>
+              <div class="agent-type-badge" id="agentTypeBadge">-</div>
+              <div class="agent-stats-mini">
+                Success Rate: <span id="agentSuccessRate">-</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Rooms -->
+          <div class="rooms-container" id="rooms">
+            <div class="room" data-room="1">🚪<span class="room-label">Room 1</span></div>
+            <div class="room" data-room="2">🚪<span class="room-label">Room 2</span></div>
+            <div class="room" data-room="3">🚪<span class="room-label">Room 3</span></div>
+            <div class="room" data-room="4">🚪<span class="room-label">Room 4</span></div>
+            <div class="room" data-room="5">🚪<span class="room-label">Room 5</span></div>
+          </div>
+          
+          <!-- Run Button -->
+          <div class="run-controls">
+            <button class="run-btn" id="runBtn" onclick="startRun()">
+              ⚔️ START RUN
+            </button>
+          </div>
+          
+          <!-- Result -->
+          <div class="run-result" id="runResult">
+            <div class="result-title" id="resultTitle">-</div>
+            <div class="result-rooms" id="resultRooms">-</div>
+            <div class="result-message" id="resultMessage">-</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- History -->
+      <div class="history-section">
+        <h3 class="section-title">📜 RUN HISTORY</h3>
+        <div class="history-list" id="historyList">
+          <div class="empty-state">
+            <div class="icon">🏃</div>
+            <p>No runs yet. Start your first run!</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
+
+  <script>
+    // ============ CONFIG ============
+    const AGENT_CONFIG = {
+      0: {
+        name: 'Aggressive',
+        emoji: '🔥',
+        color: 'aggressive',
+        multiplier: 2.5,
+        baseSuccessRate: 0.35,
+        image: 'https://mogra-prod.sgp1.digitaloceanspaces.com/mogra/llm/images/1770135900021-c942836a.png'
+      },
+      1: {
+        name: 'Balanced',
+        emoji: '⚖️',
+        color: 'balanced',
+        multiplier: 1.5,
+        baseSuccessRate: 0.60,
+        image: 'https://mogra-prod.sgp1.digitaloceanspaces.com/mogra/llm/images/1770135899956-79515504.png'
+      },
+      2: {
+        name: 'Defensive',
+        emoji: '🛡️',
+        color: 'defensive',
+        multiplier: 1.1,
+        baseSuccessRate: 0.85,
+        image: 'https://mogra-prod.sgp1.digitaloceanspaces.com/mogra/llm/images/1770135900051-c43c38d7.png'
+      }
+    };
+    
+    const ROOM_ICONS = ['🚪', '👹', '🗡️', '🔥', '💀'];
+    const SUCCESS_ICONS = ['✅', '⚔️', '💎', '🏆', '👑'];
+    
+    // ============ STATE ============
+    let agent = null;
+    let selectedType = null;
+    let runs = [];
+    let isRunning = false;
+    
+    // ============ LOAD/SAVE ============
+    function loadState() {
+      const saved = localStorage.getItem('clawrun_demo_v2');
+      if (saved) {
+        const data = JSON.parse(saved);
+        agent = data.agent;
+        runs = data.runs || [];
+        
+        if (agent) {
+          showGameScreen();
+        }
+      }
+    }
+    
+    function saveState() {
+      localStorage.setItem('clawrun_demo_v2', JSON.stringify({ agent, runs }));
+    }
+    
+    // ============ REGISTRATION ============
+    function selectType(type) {
+      selectedType = type;
+      
+      document.querySelectorAll('.type-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      document.querySelector(`.type-card[data-type="${type}"]`).classList.add('selected');
+    }
+    
+    function generateApiKey() {
+      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      let key = 'clw_';
+      for (let i = 0; i < 32; i++) {
+        key += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return key;
+    }
+    
+    function generateClaimCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+    
+    function registerAgent() {
+      const nameInput = document.getElementById('agentName');
+      const name = nameInput.value.trim();
+      
+      if (!name) {
+        showToast('Enter an agent name!', 'error');
+        return;
+      }
+      
+      if (selectedType === null) {
+        showToast('Select an agent type!', 'error');
+        return;
+      }
+      
+      const config = AGENT_CONFIG[selectedType];
+      
+      agent = {
+        name: name,
+        type: selectedType,
+        apiKey: generateApiKey(),
+        claimCode: generateClaimCode(),
+        totalRuns: 0,
+        fullClears: 0,
+        totalRoomsCleared: 0,
+        createdAt: Date.now()
+      };
+      
+      runs = [];
+      saveState();
+      
+      // Show credentials
+      document.getElementById('apiKeyValue').textContent = agent.apiKey;
+      document.getElementById('claimCodeValue').textContent = agent.claimCode;
+      document.getElementById('credentialsBox').style.display = 'block';
+      document.getElementById('registerBtn').style.display = 'none';
+      
+      showToast(`${config.emoji} ${name} registered!`, 'success');
+    }
+    
+    function enterGame() {
+      showGameScreen();
+    }
+    
+    // ============ GAME SCREEN ============
+    function showGameScreen() {
+      document.getElementById('registerScreen').style.display = 'none';
+      document.getElementById('gameScreen').classList.add('active');
+      document.getElementById('headerUser').style.display = 'block';
+      
+      updateGameUI();
+    }
+    
+    function updateGameUI() {
+      if (!agent) return;
+      
+      const config = AGENT_CONFIG[agent.type];
+      
+      // Header
+      document.getElementById('headerAgentName').textContent = `${config.emoji} ${agent.name}`;
+      document.getElementById('headerClaimCode').textContent = agent.claimCode;
+      
+      // Agent display
+      document.getElementById('agentAvatar').src = config.image;
+      document.getElementById('agentDisplayName').textContent = `${config.emoji} ${agent.name}`;
+      
+      const badge = document.getElementById('agentTypeBadge');
+      badge.textContent = config.name.toUpperCase();
+      badge.className = `agent-type-badge ${config.color}`;
+      
+      document.getElementById('agentSuccessRate').textContent = `${Math.round(config.baseSuccessRate * 100)}% base`;
+      
+      // Stats
+      const winRate = agent.totalRuns > 0 
+        ? Math.round((agent.fullClears / agent.totalRuns) * 100) 
+        : 0;
+      
+      document.getElementById('statRuns').textContent = agent.totalRuns;
+      document.getElementById('statClears').textContent = agent.fullClears;
+      document.getElementById('statRooms').textContent = agent.totalRoomsCleared;
+      document.getElementById('statWinRate').textContent = winRate + '%';
+      
+      // History
+      renderHistory();
+    }
+    
+    function renderHistory() {
+      const listEl = document.getElementById('historyList');
+      
+      if (runs.length === 0) {
+        listEl.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">🏃</div>
+            <p>No runs yet. Start your first run!</p>
+          </div>
+        `;
+        return;
+      }
+      
+      const recentRuns = [...runs].reverse().slice(0, 20);
+      
+      let html = '';
+      for (const run of recentRuns) {
+        const roomsHtml = Array(5).fill(0).map((_, i) => {
+          if (i < run.roomsCleared) return '<div class="history-room cleared"></div>';
+          if (i === run.roomsCleared && run.roomsCleared < 5) return '<div class="history-room failed"></div>';
+          return '<div class="history-room"></div>';
+        }).join('');
+        
+        const time = new Date(run.timestamp).toLocaleTimeString();
+        
+        html += `
+          <div class="history-item">
+            <div class="history-rooms">${roomsHtml}</div>
+            <span class="history-time">${time}</span>
+          </div>
+        `;
+      }
+      
+      listEl.innerHTML = html;
+    }
+    
+    // ============ DUNGEON RUN ============
+    async function startRun() {
+      if (isRunning || !agent) return;
+      
+      isRunning = true;
+      
+      const config = AGENT_CONFIG[agent.type];
+      const runBtn = document.getElementById('runBtn');
+      const resultEl = document.getElementById('runResult');
+      
+      runBtn.disabled = true;
+      runBtn.textContent = '⏳ RUNNING...';
+      resultEl.classList.remove('show');
+      
+      resetRooms();
+      
+      // Simulate run
+      const result = await simulateRun(config);
+      
+      // Update stats
+      agent.totalRuns++;
+      agent.totalRoomsCleared += result.roomsCleared;
+      if (result.roomsCleared === 5) {
+        agent.fullClears++;
+      }
+      
+      // Save run
+      runs.push({
+        roomsCleared: result.roomsCleared,
+        timestamp: Date.now()
+      });
+      
+      saveState();
+      
+      // Show result
+      showResult(result);
+      
+      isRunning = false;
+      runBtn.disabled = false;
+      runBtn.textContent = '⚔️ RUN AGAIN';
+      
+      updateGameUI();
+    }
+    
+    async function simulateRun(config) {
+      const rooms = document.querySelectorAll('.room');
+      let roomsCleared = 0;
+      
+      for (let i = 0; i < 5; i++) {
+        const room = rooms[i];
+        
+        room.classList.add('active');
+        room.innerHTML = `⚔️<span class="room-label">Fighting...</span>`;
+        
+        await sleep(700);
+        
+        // Success chance decreases per room
+        const roomPenalty = i * 0.05;
+        const successChance = config.baseSuccessRate - roomPenalty;
+        const success = Math.random() < successChance;
+        
+        room.classList.remove('active');
+        
+        if (success) {
+          room.classList.add('cleared');
+          room.innerHTML = `${SUCCESS_ICONS[i]}<span class="room-label">Cleared!</span>`;
+          roomsCleared++;
+          await sleep(400);
+        } else {
+          room.classList.add('failed');
+          room.innerHTML = `💀<span class="room-label">Failed</span>`;
+          await sleep(400);
+          break;
+        }
+      }
+      
+      return { roomsCleared };
+    }
+    
+    function showResult(result) {
+      const resultEl = document.getElementById('runResult');
+      const titleEl = document.getElementById('resultTitle');
+      const roomsEl = document.getElementById('resultRooms');
+      const messageEl = document.getElementById('resultMessage');
+      
+      if (result.roomsCleared === 5) {
+        titleEl.textContent = '🎉 FULL CLEAR!';
+        titleEl.className = 'result-title success';
+        messageEl.textContent = 'Your agent conquered The Abyss!';
+      } else if (result.roomsCleared >= 3) {
+        titleEl.textContent = '⚡ PARTIAL SUCCESS';
+        titleEl.className = 'result-title partial';
+        messageEl.textContent = 'A valiant effort! Try again.';
+      } else if (result.roomsCleared > 0) {
+        titleEl.textContent = '💫 EARLY EXIT';
+        titleEl.className = 'result-title partial';
+        messageEl.textContent = 'The Abyss proved too dangerous.';
+      } else {
+        titleEl.textContent = '💀 INSTANT DEATH';
+        titleEl.className = 'result-title failed';
+        messageEl.textContent = 'The first room claimed your agent!';
+      }
+      
+      roomsEl.textContent = `Rooms Cleared: ${result.roomsCleared}/5`;
+      
+      resultEl.classList.add('show');
+    }
+    
+    function resetRooms() {
+      const rooms = document.querySelectorAll('.room');
+      rooms.forEach((room, i) => {
+        room.classList.remove('cleared', 'failed', 'active');
+        room.innerHTML = `🚪<span class="room-label">Room ${i + 1}</span>`;
+      });
+    }
+    
+    // ============ HELPERS ============
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
+    function copyToClipboard(elementId) {
+      const text = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Copied!', 'success');
+      });
+    }
+    
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+    
+    // ============ INIT ============
+    document.addEventListener('DOMContentLoaded', () => {
+      loadState();
+    });
+  </script>
+</body>
+</html>
